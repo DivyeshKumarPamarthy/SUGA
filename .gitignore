@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+db.sqlite3
+suga_backend/db.sqlite3
+suga_backend/staticfiles/
+suga_backend/media/
+*.log
+
+# Node/JS/TS
+node_modules/
+suga_frontend/node_modules/
+dist/
+suga_frontend/dist/
+suga_frontend/dist-ssr/
+.env
+.env.local
+.env.production
+.env.development
+*.local
+
+# System/IDE
+.DS_Store
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+Thumbs.db

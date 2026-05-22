@@ -17,14 +17,26 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write('Seeding SUGA database...\n')
 
-        # 1. Fix admin role
-        admin_user = User.objects.filter(username='admin').first()
-        if admin_user:
+        # 1. Create/Fix admin role
+        admin_user, created = User.objects.get_or_create(
+            username='admin',
+            defaults={
+                'email': 'admin@example.com',
+                'first_name': 'Platform',
+                'last_name': 'Admin',
+                'role': 'admin',
+                'is_staff': True,
+                'is_superuser': True,
+            }
+        )
+        if created or not admin_user.is_superuser:
             admin_user.role = 'admin'
-            admin_user.first_name = 'Platform'
-            admin_user.last_name = 'Admin'
+            admin_user.is_staff = True
+            admin_user.is_superuser = True
+            admin_user.set_password('admin123')
             admin_user.save()
-            self.stdout.write(self.style.SUCCESS('  ✓ Admin user role set'))
+            self.stdout.write(self.style.SUCCESS('  ✓ Admin user created/updated'))
+
 
         # 2. Create a customer
         customer, created = User.objects.get_or_create(
